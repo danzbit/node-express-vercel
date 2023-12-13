@@ -182,7 +182,7 @@ app.get('/scrape', async (req, res) => {
 
   try {
     const result = await crawlAndReturnResult(targetUrl, depth);
-    res.json(result);
+    return res.status(200).json(result);
   } catch (error) {
     let errorMessage = 'An error occurred while scraping the page.';
 
@@ -192,7 +192,7 @@ app.get('/scrape', async (req, res) => {
       errorMessage = `Error scraping ${targetUrl}: ${error.message || error}`;
     }
 
-    res.status(500).json({ error: errorMessage });
+    return res.status(500).json({ error: errorMessage });
   }
 });
 
@@ -202,12 +202,12 @@ app.post('/csv', async (req, res) => {
 
   convertToCsv(result, fileId);
 
-  res.status(200).json({ fileId })
+  return res.status(200).json({ fileId })
 })
 
 app.get('/download/:fileId', (req, res) => {
   const { fileId } = req.params
-  res.download(`./uploads/data-${fileId}-collected.csv`)
+  return res.download(`./uploads/data-${fileId}-collected.csv`)
 });
 
 app.post('/add-csv', (req, res) => {
@@ -216,7 +216,7 @@ app.post('/add-csv', (req, res) => {
 
   addToCsvFile(result, fileId);
 
-  res.status(200).json({ fileId })
+  return res.status(200).json({ fileId })
 })
 
 const uploadFolderPath = path.join(__dirname, 'uploads');
