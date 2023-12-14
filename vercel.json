@@ -16,5 +16,11 @@
         "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
       }
     }
-  ]
+  ],
+  "functions": {
+    "./*.js": {
+      "memory": 3008,
+      "maxDuration": 30
+    }
+  }
 }
